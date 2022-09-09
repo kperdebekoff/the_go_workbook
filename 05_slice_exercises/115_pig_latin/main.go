@@ -27,32 +27,14 @@ func readInput() string {
 func convertToPigLatin(w string) []string {
 
 	sliceOfWords := strings.Split(w, " ")
-
 	for i := 0; i < len(sliceOfWords); i++ {
-
-		if isBeginVowels(sliceOfWords[i]) {
-			sliceOfWords[i] += "way"
+		if !isBeginVowels(sliceOfWords[i]) {
+			sliceOfWords[i] = consonantWordToPigLatin(sliceOfWords[i])
 		} else {
-			w := ""
-			symb := []rune(sliceOfWords[i])
-
-			if symb[0] != 'y' {
-				for i := 0; i < len(symb); i++ {
-					if i > 0 {
-						w += string(symb[i])
-					}
-				}
-				w += string(symb[0]) + "ay"
-				sliceOfWords[i] = w
-			} else {
-				sliceOfWords[i] += "ay"
-			}
+			sliceOfWords[i] = vowelWordToPigLatin(sliceOfWords[i])
 		}
-
 	}
-
 	return sliceOfWords
-
 }
 
 func isBeginVowels(word string) bool {
@@ -60,10 +42,60 @@ func isBeginVowels(word string) bool {
 	vowels := []byte{'a', 'e', 'i', 'o', 'u'}
 	isVowel := false
 	for _, v := range vowels {
-		if v == word[0] {
+		if word[0] == v {
 			isVowel = true
 		}
 	}
 	return isVowel
+
+}
+
+func consonantWordToPigLatin(word string) string {
+
+	w := ""
+if word[0] != 'y' {
+
+	ind := 0
+	end := ""
+	for i := 0; i < len(word); i++ {
+		if isBeginVowels(string(word[i])) {
+			ind = i
+			break
+		}
+	}
+
+	for i := 0; i < len(word); i++ {
+		if i >= ind {
+			w += string(word[i])
+		} else {
+			end += string(word[i])
+		}
+	}
+
+	w += end + "ay"
+
+} else {
+
+	for i := 0; i < len(word); i++ {
+		w += string(word[i])
+	}
+
+	w += "ay"
+
+}
+
+	return w
+
+}
+
+func vowelWordToPigLatin(word string) string {
+
+	w := ""
+	for i := 0; i < len(word); i++ {
+		w += string(word[i])
+	}
+	w += "way"
+
+	return w
 
 }
