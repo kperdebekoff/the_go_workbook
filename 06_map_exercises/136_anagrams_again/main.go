@@ -83,8 +83,7 @@ func isAnagrams(words1, words2 string) bool {
 		}
 		
 		isAnagram = reflect.DeepEqual(uniqChars1, uniqChars2)
-		fmt.Println(uniqChars1)
-		fmt.Println(uniqChars2)
+
 	}
 
 	return isAnagram
